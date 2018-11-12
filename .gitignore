@@ -49,7 +49,7 @@ SourceArt/**/*.png
 SourceArt/**/*.tga
 
 # Starter Content
-*/BattleTank/BattleTank/Content/StarterContent
+BattleTank/Content/StarterContent/*
 
 # Binary Files
 Binaries/*
