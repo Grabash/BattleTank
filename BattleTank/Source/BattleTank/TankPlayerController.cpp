@@ -12,7 +12,7 @@ void ATankPlayerController::BeginPlay()
 	if (GetControlledTank() != nullptr)
 	{
 		FString ControlledTank = GetControlledTank()->GetName();
-		 UE_LOG(LogTemp, Warning, TEXT("Possessed Tank: %s"), *ControlledTank);
+		 UE_LOG(LogTemp, Warning, TEXT("TankPlayerController: %s"), *ControlledTank);
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("Nulptr, no Tank possessed!"));
