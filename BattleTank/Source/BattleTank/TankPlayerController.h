@@ -27,10 +27,19 @@ private:
 	// Return an Out parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 
-	UPROPERTY(EditAnywhere)
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float CrossHairXLocation = 0.5;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float CrossHairYLocation = 0.33333;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		float LineTraceRange = 1000000;
+
+
+	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+
+	bool GetLookVectorHitLocation(FVector StartLocation, FVector&) const;
 
 	//ATank* GetPlayerTank() const;
 	
