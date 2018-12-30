@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "Tank.h"
 
 ATank* ATankAIController::GetControlledTank() const
 {
@@ -14,7 +15,7 @@ void ATankAIController::BeginPlay() {
 
 	ATank* p_ControlledTank = GetControlledTank();
 
-	if (!p_ControlledTank)
+	/*if (!p_ControlledTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Nullptr, no tank possessed."));
 	}
@@ -29,7 +30,7 @@ void ATankAIController::BeginPlay() {
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController found Player's Tank: %s"), *(GetPlayerTank()->GetName()));
-	}
+	}*/
 }
 
 void ATankAIController::Tick(float DeltaTime) {
