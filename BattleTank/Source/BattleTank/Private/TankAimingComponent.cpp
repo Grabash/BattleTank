@@ -3,6 +3,7 @@
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -17,7 +18,14 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
 }
 
 
@@ -25,7 +33,7 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 
-		if (!Barrel) { return; }
+		if (!Barrel || !Turret) { return; }
 	
 		FVector OutLaunchVelocity(0);
 		FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -53,6 +61,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			// UE_LOG(LogTemp, Warning, TEXT("%s fireing at %s"), *OurTankName, *AimDirection.ToString());
 
 			MoveBarrelTowards(AimDirection);
+			MoveTurretTowards(AimDirection);
 
 			auto Time = GetWorld()->GetTimeSeconds();
 			UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
@@ -65,7 +74,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	// Work-out fifference between current barrel roation and AimDirection
+	// Work-out Difference between current barrel roation and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
@@ -75,6 +84,20 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Give a max elevation speed, and the frame time
 
 	Barrel->Elevate(DeltaRotator.Pitch);
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	// Work-out Difference between current turret roation and AimDirection
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - TurretRotator;
+	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
+
+	// Move the turret to the right amount this frame
+	// Give a max elevation speed, and the frame time
+
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 
 
