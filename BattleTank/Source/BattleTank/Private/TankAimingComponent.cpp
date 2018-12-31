@@ -74,8 +74,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Move the barrer to the right amount this frame
 	// Give a max elevation speed, and the frame time
 
-	Barrel->Elevate(5); // TODO remove magic number
-
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
 
 
