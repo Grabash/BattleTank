@@ -11,7 +11,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -61,7 +61,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			// UE_LOG(LogTemp, Warning, TEXT("%s fireing at %s"), *OurTankName, *AimDirection.ToString());
 
 			MoveBarrelTowards(AimDirection);
-			MoveTurretTowards(AimDirection);
+			// MoveTurretTowards(AimDirection);
 
 			auto Time = GetWorld()->GetTimeSeconds();
 			UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
@@ -84,20 +84,21 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Give a max elevation speed, and the frame time
 
 	Barrel->Elevate(DeltaRotator.Pitch);
-}
-
-void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
-{
-	// Work-out Difference between current turret roation and AimDirection
-	auto TurretRotator = Turret->GetForwardVector().Rotation();
-	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotator - TurretRotator;
-	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
-
-	// Move the turret to the right amount this frame
-	// Give a max elevation speed, and the frame time
-
 	Turret->Rotate(DeltaRotator.Yaw);
 }
+
+//void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+//{
+//	// Work-out Difference between current turret roation and AimDirection
+//	auto TurretRotator = Turret->GetForwardVector().Rotation();
+//	auto AimAsRotator = AimDirection.Rotation();
+//	auto DeltaRotator = AimAsRotator - TurretRotator;
+//	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
+//
+//	// Move the turret to the right amount this frame
+//	// Give a max elevation speed, and the frame time
+//
+//	Turret->Rotate(DeltaRotator.Yaw);
+//}
 
 
