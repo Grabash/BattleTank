@@ -3,67 +3,75 @@
 #include "TankAIController.h"
 #include "Tank.h"
 
-ATank* ATankAIController::GetControlledTank() const
-{
-	return Cast<ATank> (GetPawn());
-
-}
+//ATank* ATankAIController::GetControlledTank() const
+//{
+//	return Cast<ATank> (GetPawn());
+//
+//}
 
 void ATankAIController::BeginPlay() {
 
 	Super::BeginPlay();
 
-	ATank* p_ControlledTank = GetControlledTank();
+	//ATank* p_ControlledTank = GetControlledTank();
 
-	/*if (!p_ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Nullptr, no tank possessed."));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController: %s"), *(p_ControlledTank->GetName()));
-	}
-
-	if (!GetPlayerTank()) {
-		UE_LOG(LogTemp, Warning, TEXT("AIController couldn't find Player's tank."));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AIController found Player's Tank: %s"), *(GetPlayerTank()->GetName()));
-	}*/
 }
+
+//void ATankAIController::Tick(float DeltaTime) {
+//	Super::Tick(DeltaTime);
+//	
+//	if (GetPlayerTank())
+//	{
+//		// TODO Move towards the player
+//
+//
+//		// Aim towards the player
+//		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+//
+//		// Fire if ready
+//		// Just fire for now
+//		GetControlledTank()->Fire();
+//	}
+//
+//	
+//}
 
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	
-	if (GetPlayerTank())
+
+	if (GetWorld()->GetFirstPlayerController())
 	{
+		ATank* PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+		ATank* ControlledTank = Cast<ATank>(GetPawn());
+
 		// TODO Move towards the player
 
 
 		// Aim towards the player
-		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
 		// Fire if ready
+		// Just fire for now
+		ControlledTank->Fire();
 	}
 
-	
+
 }
 
-ATank * ATankAIController::GetPlayerTank() const
-{
-	ATank* p_PlayerTank = nullptr;
-
-	if (GetWorld()->GetFirstPlayerController())
-	{
-		p_PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-		return p_PlayerTank;
-	}
-	else
-	{
-		// UE_LOG(LogTemp, Warning, TEXT("Nullptr, no PlayerController."));
-		return nullptr;
-	}
-	
-}
+//ATank * ATankAIController::GetPlayerTank() const
+//{
+//	ATank* p_PlayerTank = nullptr;
+//
+//	if (GetWorld()->GetFirstPlayerController())
+//	{
+//		p_PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+//		return p_PlayerTank;
+//	}
+//	else
+//	{
+//		// UE_LOG(LogTemp, Warning, TEXT("Nullptr, no PlayerController."));
+//		return nullptr;
+//	}
+//	
+//}
 
