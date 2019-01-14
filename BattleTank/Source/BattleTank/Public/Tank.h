@@ -10,6 +10,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -24,8 +25,7 @@ public:
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -53,5 +53,12 @@ public:
 
 	
 	double LastFireTime = 0;
+
+protected:
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+		UTankMovementComponent* TankMovementComponent = nullptr;
+
 
 };
