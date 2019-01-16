@@ -15,8 +15,6 @@ void UTankTrack::SetThrottle(float Throttle)
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 
-	UE_LOG(LogTemp, Error, TEXT("Tank Root: %s"), *TankRoot->GetName());
-
 	TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 }
 
