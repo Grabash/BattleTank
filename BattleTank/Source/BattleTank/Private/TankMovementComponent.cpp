@@ -9,7 +9,7 @@ void UTankMovementComponent::Initialize(UTankTrack* LeftTrackToSet, UTankTrack* 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 
-	UE_LOG(LogTemp, Warning, TEXT("LeftTrack: %s RightTrack: %s"), *LeftTrack->GetName(), *RightTrack->GetName());
+	// UE_LOG(LogTemp, Warning, TEXT("LeftTrack: %s RightTrack: %s"), *LeftTrack->GetName(), *RightTrack->GetName());
 }
 
 void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
@@ -40,38 +40,21 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	if (!LeftTrack || !RightTrack) { return; }
 
 	//auto Name = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
-	
-
-	/*if (Throw < 0)
-	{
-		Throw = Throw /2.0f;
-	}*/
-
-	/*if (Throw != 0.0f)
-	{
-		LeftTrack->SetThrottle(Throw);
-		RightTrack->SetThrottle(Throw);
-	}*/
+	// UE_LOG(LogTemp, Warning, TEXT("Intend move forward throw: %f"), Throw);
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
-	// TODO Prevent double-speed due to dual control use
+	
 
 }
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Intend turn right throw: %f"), Throw);
+	// UE_LOG(LogTemp, Warning, TEXT("Intend turn right throw: %f"), Throw);
 	if (!LeftTrack || !RightTrack) { return; }
 
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 }
 
-//void UTankMovementComponent::IntendTurnLeft(float Throw)
-//{
-//	LeftTrack->SetThrottle(-Throw);
-//	RightTrack->SetThrottle(Throw);
-//}
 
