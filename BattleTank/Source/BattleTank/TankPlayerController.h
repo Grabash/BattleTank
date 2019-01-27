@@ -16,7 +16,6 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	GENERATED_BODY()
 
 private:
-	ATank* GetControlledTank() const;
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
@@ -26,6 +25,10 @@ private:
 
 	// Return an Out parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControlledTank() const;
 
 public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)

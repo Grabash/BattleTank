@@ -7,6 +7,18 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+// Enums
+
+UENUM()
+enum class EFiringState : uint8
+{
+	Locked,
+	Aiming,
+	Reloading
+
+};
+
+
 // Forward Declaration
 class UTankBarrel; 
 class UTankTurret;
@@ -34,6 +46,10 @@ public:
 
 	void MoveBarrelTowards(FVector AimDirection);
 	//void MoveTurretTowards(FVector AimDirection);
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
 
 
 

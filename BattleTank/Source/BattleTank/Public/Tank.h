@@ -54,6 +54,7 @@ public:
 	
 	double LastFireTime = 0;
 
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
