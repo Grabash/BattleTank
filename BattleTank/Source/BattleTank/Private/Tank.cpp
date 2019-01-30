@@ -12,6 +12,8 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
+	UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Constructor called."), *GetName())
+
 	// No need to protect points as added at construction
 
 	// 
@@ -21,12 +23,13 @@ ATank::ATank()
 }
 
 // Called when the game starts or when spawned
-//void ATank::BeginPlay()
-//{
-//	Super::BeginPlay();
-//	UE_LOG(LogTemp, Warning, TEXT("Tank Begin Play"));
-//	
-//}
+void ATank::BeginPlay()
+{
+	Super::BeginPlay(); // Needed for BP BeginPlay to run!
+
+	UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
+	
+}
 
 
 
@@ -34,7 +37,7 @@ ATank::ATank()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 	//auto OurTankName = GetName();
@@ -58,9 +61,11 @@ void ATank::Fire()
 	auto Time = GetWorld()->GetTimeSeconds();
 	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank firing!"), Time);
 
+	if (!ensure(Barrel)) { return; }
+
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded) 
+	if (isReloaded) 
 	{
 		/*UE_LOG(LogTemp, Warning, TEXT("%f: No barrel found!"), Time);
 		return;*/
