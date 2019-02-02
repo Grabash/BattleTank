@@ -12,7 +12,7 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Constructor called."), *GetName())
+	// UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Constructor called."), *GetName())
 
 	// No need to protect points as added at construction
 
@@ -27,7 +27,9 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP BeginPlay to run!
 
-	UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
+	// UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 

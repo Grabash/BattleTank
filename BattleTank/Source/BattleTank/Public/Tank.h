@@ -37,6 +37,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void Fire();
 
+	// TODO remove once firing is moved to Aiming Component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float LaunchSpeed = 5000;
 
