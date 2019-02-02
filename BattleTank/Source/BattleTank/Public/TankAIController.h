@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 //#include "Public/Tank.h"
+#include "TankAimingComponent.h"
 #include "TankAIController.generated.h"
 
 /**

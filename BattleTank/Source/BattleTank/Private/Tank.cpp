@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
-#include "TankAimingComponent.h"
+//#include "TankAimingComponent.h"
 //#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
@@ -29,7 +29,7 @@ void ATank::BeginPlay()
 
 	// UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 	
 }
 
@@ -37,14 +37,14 @@ void ATank::BeginPlay()
 
 
 
-void ATank::AimAt(FVector HitLocation)
-{
-	if (!ensure(TankAimingComponent)) { return; }
-
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-	//auto OurTankName = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurTankName, *HitLocation.ToString());
-}
+//void ATank::AimAt(FVector HitLocation)
+//{
+//	if (!ensure(TankAimingComponent)) { return; }
+//
+//	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
+//	//auto OurTankName = GetName();
+//	//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurTankName, *HitLocation.ToString());
+//}
 
 // Setting Turret and Barrel moved to AimingComponent
 //void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)

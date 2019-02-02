@@ -9,7 +9,7 @@
 
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
+// class UTankAimingComponent;
 // class UTankMovementComponent;
 class AProjectile;
 
@@ -31,7 +31,6 @@ public:
 
 	void BeginPlay();
 
-	void AimAt(FVector HitLocation);
 
 
 	UFUNCTION(BlueprintCallable)
@@ -54,8 +53,8 @@ public:
 	
 	double LastFireTime = 0;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
+	/*UPROPERTY(BlueprintReadOnly)
+	UTankAimingComponent* TankAimingComponent = nullptr;*/
 
 	/*UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent* TankMovementComponent = nullptr;*/

@@ -42,7 +42,8 @@ public:
 
 	// TODO add SetTurretReference
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	//void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 	UTankBarrel* Barrel = nullptr;
 	UTankTurret* Turret = nullptr;
@@ -53,6 +54,10 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Locked;
+
+	// TODO remove once firing is moved to Aiming Component
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 5000;
 
 
 
