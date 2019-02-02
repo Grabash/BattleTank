@@ -22,6 +22,7 @@ enum class EFiringState : uint8
 // Forward Declaration
 class UTankBarrel; 
 class UTankTurret;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -33,7 +34,11 @@ public:
 	UTankAimingComponent();
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
+	void Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, TSubclassOf<AProjectile> ProjectileBP); //Added Projectile class selection to Initlaize due to a bug(?) with resetting blueprints
+
+
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 	////UFUNCTION(BlueprintCallable, Category = Setup)
 	//void SetBarrelReference(UTankBarrel* BarrelToSet);
@@ -58,6 +63,16 @@ protected:
 	// TODO remove once firing is moved to Aiming Component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 5000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	double LastFireTime = 0;
+
+
 
 
 

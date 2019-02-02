@@ -3,8 +3,8 @@
 #include "Tank.h"
 //#include "TankAimingComponent.h"
 //#include "TankMovementComponent.h"
-#include "TankBarrel.h"
-#include "Projectile.h"
+//#include "TankBarrel.h"
+//#include "Projectile.h"
 
 // Sets default values
 ATank::ATank()
@@ -23,15 +23,15 @@ ATank::ATank()
 }
 
 // Called when the game starts or when spawned
-void ATank::BeginPlay()
-{
-	Super::BeginPlay(); // Needed for BP BeginPlay to run!
-
-	// UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
-
-	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-	
-}
+//void ATank::BeginPlay()
+//{
+//	Super::BeginPlay(); // Needed for BP BeginPlay to run!
+//
+//	// UE_LOG(LogTemp, Warning, TEXT("[%s] e8dd6798: Tank Begin Play called."), *GetName());
+//
+//	//TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+//	
+//}
 
 
 
@@ -58,33 +58,31 @@ void ATank::BeginPlay()
 //	TankAimingComponent->SetTurretReference(TurretToSet);
 //}
 
-void ATank::Fire()
-{
-	auto Time = GetWorld()->GetTimeSeconds();
-	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank firing!"), Time);
-
-	if (!ensure(Barrel)) { return; }
-
-	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (isReloaded) 
-	{
-		/*UE_LOG(LogTemp, Warning, TEXT("%f: No barrel found!"), Time);
-		return;*/
-
-		// Spawn a projectile at the socket location on the barrel
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
-			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile"))
-			);
-
-		Projectile->LaunchProjectile(LaunchSpeed);
-		LastFireTime = FPlatformTime::Seconds();
-
-	}
-
-	
-	
-}
+//void ATank::Fire()
+//{
+//	auto Time = GetWorld()->GetTimeSeconds();
+//	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank firing!"), Time);
+//
+//	if (!ensure(Barrel)) { return; }
+//
+//	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+//
+//	if (isReloaded) 
+//	{
+//		/*UE_LOG(LogTemp, Warning, TEXT("%f: No barrel found!"), Time);
+//		return;*/
+//
+//		// Spawn a projectile at the socket location on the barrel
+//		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+//			ProjectileBlueprint,
+//			Barrel->GetSocketLocation(FName("Projectile")),
+//			Barrel->GetSocketRotation(FName("Projectile"))
+//			);
+//
+//		Projectile->LaunchProjectile(LaunchSpeed);
+//		LastFireTime = FPlatformTime::Seconds();
+//
+//	}
+//
+//}
 

@@ -4,6 +4,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -16,10 +17,11 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet)
+void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, TSubclassOf<AProjectile> ProjectileBP)
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+	ProjectileBlueprint = ProjectileBP;
 }
 
 
@@ -48,7 +50,8 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 			ESuggestProjVelocityTraceOption::DoNotTrace
 		);
 			
-		if (ensure(bHaveAimSolution))
+		//if (ensure(bHaveAimSolution))
+		if (bHaveAimSolution)
 		{
 			auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 			//	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
@@ -83,18 +86,34 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 
-//void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
-//{
-//	// Work-out Difference between current turret roation and AimDirection
-//	auto TurretRotator = Turret->GetForwardVector().Rotation();
-//	auto AimAsRotator = AimDirection.Rotation();
-//	auto DeltaRotator = AimAsRotator - TurretRotator;
-//	// UE_LOG(LogTemp, Warning, TEXT("AimAsRotator: %s"), *DeltaRotator.ToString());
-//
-//	// Move the turret to the right amount this frame
-//	// Give a max elevation speed, and the frame time
-//
-//	Turret->Rotate(DeltaRotator.Yaw);
-//}
+void UTankAimingComponent::Fire()
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank firing!"), Time);
 
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+
+
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (isReloaded)
+	{
+		/*UE_LOG(LogTemp, Warning, TEXT("%f: No barrel found!"), Time);
+		return;*/
+
+		if (!ensure(ProjectileBlueprint->IsChildOf<AProjectile>())) { return; }
+
+		// Spawn a projectile at the socket location on the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+
+	}
+
+}
 
