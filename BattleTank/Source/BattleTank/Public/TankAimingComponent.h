@@ -58,7 +58,7 @@ public:
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Locked;
+	EFiringState FiringState = EFiringState::Reloading;
 
 	// TODO remove once firing is moved to Aiming Component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -72,6 +72,9 @@ protected:
 
 	double LastFireTime = 0;
 
+private:
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+	virtual void BeginPlay() override;
 
 
 
