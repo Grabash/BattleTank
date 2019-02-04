@@ -33,6 +33,15 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 		FiringState = EFiringState::Reloading;
 	}
 
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
+	}
+
 	// TODO Handle aiming and locked states
 
 }
@@ -42,6 +51,16 @@ void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
 	ProjectileBlueprint = ProjectileBP;
+}
+
+bool UTankAimingComponent::IsBarrelMoving()
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Barrel Forward Vector: %s Aim Direction: %s"), *(Barrel->GetForwardVector().ToString()), *(AimDirection.ToString()));
+	if (!ensure(Barrel)) { return false; }
+
+	return ((Barrel->GetForwardVector().Equals(AimDirection, 0.01f))) ? false : true;
+
+	
 }
 
 
@@ -73,7 +92,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		//if (ensure(bHaveAimSolution))
 		if (bHaveAimSolution)
 		{
-			auto AimDirection = OutLaunchVelocity.GetSafeNormal();
+			AimDirection = OutLaunchVelocity.GetSafeNormal();
 			//	UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
 			// UE_LOG(LogTemp, Warning, TEXT("%s fireing at %s"), *OurTankName, *AimDirection.ToString());
 
