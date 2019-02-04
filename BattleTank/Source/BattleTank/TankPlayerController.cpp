@@ -52,6 +52,8 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	// if (!GetControlledTank()) { return; }
 
+	if (!GetPawn()) { return; } // e.g. if not possesing
+
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
