@@ -122,7 +122,23 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Give a max elevation speed, and the frame time
 
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+
+	// If Yaw > 180 then go opposite way
+
+	// TODO FMath::Abs(DeltaRotator.Yaw)
+
+	// Yaw the shortest way
+	if (DeltaRotator.Yaw < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+
+	else 
+	{
+		// If Yaw > 180 then go opposite way
+		Turret->Rotate(-DeltaRotator.Yaw);
+	}
+	
 }
 
 void UTankAimingComponent::Fire()
