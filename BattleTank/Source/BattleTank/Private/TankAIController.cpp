@@ -3,11 +3,6 @@
 #include "TankAIController.h"
 //#include "Tank.h"
 
-//ATank* ATankAIController::GetControlledTank() const
-//{
-//	return Cast<ATank> (GetPawn());
-//
-//}
 
 void ATankAIController::BeginPlay() {
 
@@ -17,32 +12,15 @@ void ATankAIController::BeginPlay() {
 
 }
 
-//void ATankAIController::Tick(float DeltaTime) {
-//	Super::Tick(DeltaTime);
-//	
-//	if (GetPlayerTank())
-//	{
-//		// TODO Move towards the player
-//
-//
-//		// Aim towards the player
-//		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
-//
-//		// Fire if ready
-//		// Just fire for now
-//		GetControlledTank()->Fire();
-//	}
-//
-//	
-//}
 
 void ATankAIController::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
-	if (GetWorld()->GetFirstPlayerController())
-	{
+	// if (GetWorld()->GetFirstPlayerController())
+	//if (GetWorld()->GetFirstPlayerController() != NULL)
+	//{
 		auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 		//ATank* ControlledTank = Cast<ATank>(GetPawn());
 		auto ControlledTank = GetPawn();
@@ -58,31 +36,15 @@ void ATankAIController::Tick(float DeltaTime) {
 		//ControlledTank->AimAt(PlayerTank->GetActorLocation());
 		AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
-		// Fire if ready
-		// Just fire for now
-
-		// TODO Fix Firing
-		// ControlledTank->Fire();
-		AimingComponent->Fire();
-	}
+		// If aim or locked
+		if (AimingComponent->GetFiringState() == EFiringState::Locked)
+		{
+			AimingComponent->Fire();  // TODO limit firing rate
+		}
+		
+	//}
 
 
 }
 
-//ATank * ATankAIController::GetPlayerTank() const
-//{
-//	ATank* p_PlayerTank = nullptr;
-//
-//	if (GetWorld()->GetFirstPlayerController())
-//	{
-//		p_PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-//		return p_PlayerTank;
-//	}
-//	else
-//	{
-//		// UE_LOG(LogTemp, Warning, TEXT("Nullptr, no PlayerController."));
-//		return nullptr;
-//	}
-//	
-//}
 

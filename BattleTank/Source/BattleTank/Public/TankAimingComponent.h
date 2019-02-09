@@ -40,11 +40,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Fire();
 
-	////UFUNCTION(BlueprintCallable, Category = Setup)
-	//void SetBarrelReference(UTankBarrel* BarrelToSet);
-	////UFUNCTION(BlueprintCallable, Category = Setup)
-	//void SetTurretReference(UTankTurret* TurretToSet);
-
 	// TODO add SetTurretReference
 
 	//void AimAt(FVector HitLocation, float LaunchSpeed);
@@ -54,11 +49,11 @@ public:
 	UTankTurret* Turret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection);
-	//void MoveTurretTowards(FVector AimDirection);
+
+	EFiringState GetFiringState() const;
 
 protected:
-	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringState FiringState = EFiringState::Reloading;
+	
 
 	// TODO remove once firing is moved to Aiming Component
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
@@ -70,6 +65,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+	EFiringState FiringState = EFiringState::Reloading;
+
 	double LastFireTime = 0;
 	FVector AimDirection;
 
@@ -78,6 +76,8 @@ private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	virtual void BeginPlay() override;
 	virtual bool IsBarrelMoving();
+
+	
 
 
 
