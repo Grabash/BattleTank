@@ -15,21 +15,7 @@ void ATankPlayerController::BeginPlay()
 	if (!ensure(AimingComponent)) { return; }
 
 	FoundAimingComponent(AimingComponent);
-	/*else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player controller can't find AimingComponent at BeginPlay"));
-	}*/
 	
-
-	/*if (ensure(GetControlledTank() != nullptr))
-	{
-		FString ControlledTank = GetControlledTank()->GetName();
-		 UE_LOG(LogTemp, Warning, TEXT("TankPlayerController: %s"), *ControlledTank);
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("Nulptr, no Tank possessed!"));
-	}
-*/
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -62,7 +48,7 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // Out parameter
 
 	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
-	UE_LOG(LogTemp, Warning, TEXT("bGotHitLocation: %i"), bGotHitLocation);
+	// UE_LOG(LogTemp, Warning, TEXT("bGotHitLocation: %i"), bGotHitLocation);
 
 	if (bGotHitLocation) //Has "side-effect
 	{

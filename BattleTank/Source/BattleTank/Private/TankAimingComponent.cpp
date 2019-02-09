@@ -28,7 +28,12 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 {
 	//UE_LOG(LogTemp, Warning, TEXT("Aiming Component ticking."));
 
-	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (RoundsLeft <= 0)
+	{
+		FiringState = EFiringState::OutOfAmmo;
+	}
+
+	else if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -49,6 +54,11 @@ void UTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickTy
 EFiringState UTankAimingComponent::GetFiringState() const
 {
 	return FiringState;
+}
+
+int UTankAimingComponent::GetRoundsLeft() const
+{
+	return RoundsLeft;
 }
 
 void UTankAimingComponent::Initialize(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet, TSubclassOf<AProjectile> ProjectileBP)
@@ -154,7 +164,7 @@ void UTankAimingComponent::Fire()
 	//UE_LOG(LogTemp, Warning, TEXT("%f: Tank firing!"), Time);
 
 
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState == EFiringState::Locked || FiringState == EFiringState::Aiming)
 	{
 		/*UE_LOG(LogTemp, Warning, TEXT("%f: No barrel found!"), Time);
 		return;*/
@@ -173,6 +183,9 @@ void UTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		RoundsLeft--;
+
+		//UE_LOG(LogTemp, Warning, TEXT("RoundsLeft: %i"), GetRoundsLeft());
 
 	}
 
