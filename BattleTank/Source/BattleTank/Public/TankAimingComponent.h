@@ -14,7 +14,8 @@ enum class EFiringState : uint8
 {
 	Locked,
 	Aiming,
-	Reloading
+	Reloading,
+	NoAmmo
 
 };
 
