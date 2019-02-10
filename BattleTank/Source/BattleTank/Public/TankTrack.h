@@ -23,6 +23,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	float TrackMaxDrivingForce = 40000000; //Assume 40 tonne tank, and 1g acceleration
 
+	// Hack used to tone the applied side force
+	UPROPERTY(EditDefaultsOnly)
+	float CorrectionForceMultiplier = 1.0f;
+
 	UTankTrack();
 	// virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 	void ApplySidewaysForce();

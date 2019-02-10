@@ -29,19 +29,11 @@ void UTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, 
 	ApplySidewaysForce();
 
 	// Reset Throttle
-	CurrentThrottle = 0;
+	 CurrentThrottle = 0;
 
 }
 
 
-//void UTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//	// UE_LOG(LogTemp, Warning, TEXT("Track ticking."));
-//
-//	
-//	
-//}
 
 void UTankTrack::ApplySidewaysForce()
 {
@@ -53,13 +45,24 @@ void UTankTrack::ApplySidewaysForce()
 	// Calculate and apply sideways force (F = m a )
 	auto TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	auto CorrectionForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2; // Two tracks
-	TankRoot->AddForce(CorrectionForce);
+
+	//UE_LOG(LogTemp, Warning, TEXT("CorrectionForce pre multiplier: %s"), *CorrectionForce.ToString());
+
+	// Adding a parameter to modify the force from blueprint.
+	CorrectionForce = CorrectionForce * CorrectionForceMultiplier;
+
+	//UE_LOG(LogTemp, Warning, TEXT("CorrectionForce after multiplier: %s"), *CorrectionForce.ToString());
+
+	 TankRoot->AddForce(CorrectionForce);
 }
 
 
 void UTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1, 1);
+	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.0f, 1.0f);
+
+	// TODO Check this
+	DriveTrack();
 }
 
 void UTankTrack::DriveTrack()
