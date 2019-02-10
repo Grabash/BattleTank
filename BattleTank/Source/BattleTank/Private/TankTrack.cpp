@@ -61,7 +61,7 @@ void UTankTrack::SetThrottle(float Throttle)
 {
 	CurrentThrottle = FMath::Clamp<float>(CurrentThrottle + Throttle, -1.0f, 1.0f);
 
-	// TODO Check this
+	// TODO CHECK THIS! It might have been missing, but maybe it is added to early... >_>
 	DriveTrack();
 }
 
