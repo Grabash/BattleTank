@@ -11,12 +11,14 @@ AProjectile::AProjectile()
 
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	CollisionMesh = CreateDefaultSubobject<UStaticMeshComponent>(FName("Collision Mesh"));
-	//SetRootComponent(CollisionMesh);
+	SetRootComponent(CollisionMesh);
 	CollisionMesh->SetNotifyRigidBodyCollision(true);
 	CollisionMesh->SetVisibility(false);
 
 	LaunchBlast = CreateDefaultSubobject<UParticleSystemComponent>(FName("Launch Blast"));
 	LaunchBlast->AttachTo(RootComponent);
+
+	//LaunchBlast->SetWorldLocationAndRotation(CollisionMesh->RelativeLocation, CollisionMesh->RelativeRotation);
 
 	ProjectileMovement->bAutoActivate = false;
 
@@ -26,6 +28,7 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+	//FAttachmentTransformRules::KeepRelativeTransform;
 	
 }
 
