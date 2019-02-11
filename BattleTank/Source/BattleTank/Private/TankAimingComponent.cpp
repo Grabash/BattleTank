@@ -56,7 +56,7 @@ EFiringState UTankAimingComponent::GetFiringState() const
 	return FiringState;
 }
 
-int UTankAimingComponent::GetRoundsLeft() const
+int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
 }
@@ -112,15 +112,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 			// UE_LOG(LogTemp, Warning, TEXT("%s fireing at %s"), *OurTankName, *AimDirection.ToString());
 
 			MoveBarrelTowards(AimDirection);
-			// MoveTurretTowards(AimDirection);
-
-			//auto Time = GetWorld()->GetTimeSeconds();
-			//UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found"), Time);
+			
 		}
-		//else {
-		//	auto Time = GetWorld()->GetTimeSeconds();
-		//	//UE_LOG(LogTemp, Warning, TEXT("%f: No aim solve found"), Time);
-		//}
+		
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
