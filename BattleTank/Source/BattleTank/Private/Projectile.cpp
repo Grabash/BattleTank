@@ -22,6 +22,9 @@ AProjectile::AProjectile()
 	ImpactBlast->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);  //TODO Update to new API (AttachToComponent)
 	ImpactBlast->bAutoActivate = false;
 
+	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
+	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
+
 	//LaunchBlast->SetWorldLocationAndRotation(CollisionMesh->RelativeLocation, CollisionMesh->RelativeRotation);
 
 	ProjectileMovement->bAutoActivate = false;
@@ -51,6 +54,8 @@ void AProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor,
 	LaunchBlast->Deactivate();
 	// Activate the ImpactBlast
 	ImpactBlast->Activate();
+
+	ExplosionForce->FireImpulse();
 
 }
 
