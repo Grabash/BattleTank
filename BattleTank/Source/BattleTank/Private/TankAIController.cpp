@@ -1,14 +1,33 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
+#include "Tank.h"
 //#include "Tank.h"
 
 
-void ATankAIController::BeginPlay() {
+void ATankAIController::BeginPlay() 
+{
 
 	Super::BeginPlay();
 
 	//ATank* p_ControlledTank = GetControlledTank();
+}
+
+// Handling delegate in SetPawn because Constructor and BeginPlay() may race and be called too early
+
+void ATankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+
+		if (!ensure(PossessedTank)) { return; }
+
+		// TODO Subscribe our local method to the tank's death event
+	}
+
 
 }
 

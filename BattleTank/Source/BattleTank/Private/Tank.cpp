@@ -11,6 +11,10 @@ float ATank::GetHealthPercent() const
 	return (float)CurrentHealth / (float)StartingHealth;
 }
 
+void ATank::OnDeath()
+{
+}
+
 // Sets default values
 ATank::ATank()
 {

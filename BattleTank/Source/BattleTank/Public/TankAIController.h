@@ -20,6 +20,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 
 private:
 	void Tick(float DeltaTime) override;
+
+	virtual void SetPawn(APawn* InPawn) override;
 	
 public:
 	void BeginPlay() override;
