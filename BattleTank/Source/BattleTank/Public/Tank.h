@@ -58,7 +58,10 @@ private:
 	int32 StartingHealth = 100;
 
 	UPROPERTY(VisibleAnywhere, Category = "Health")
-	int32 CurrentHealth = StartingHealth;
+	int32 CurrentHealth; 
+
+	virtual void BeginPlay() override;
+	// int32 CurrentHealth = StartingHealth; //better to initialise in BeginPlay so i can be changed in BP
 
 
 	// Called when the game starts or when spawned

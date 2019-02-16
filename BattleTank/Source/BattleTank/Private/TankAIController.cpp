@@ -2,6 +2,7 @@
 
 #include "TankAIController.h"
 #include "Tank.h"
+#include "GameFramework/Pawn.h"
 //#include "Tank.h"
 
 
@@ -35,6 +36,7 @@ void ATankAIController::SetPawn(APawn* InPawn)
 void ATankAIController::OnPossesedTankDeath()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Received OnDeath broadcast from %s!"), *(GetPawn()->GetName()));
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 

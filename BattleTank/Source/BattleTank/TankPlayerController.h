@@ -27,6 +27,10 @@ private:
 
 	// Return an Out parameter, true if hit landscape
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+		void OnPossessedTankDeath();
 
 protected:
 	/*UFUNCTION(BlueprintCallable, Category = "Setup")

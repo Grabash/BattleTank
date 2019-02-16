@@ -93,6 +93,27 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation) const {
 	return false;
 }
 
+void ATankPlayerController::SetPawn(APawn * InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	auto PossessedTank = Cast<ATank>(GetPawn());
+
+	if (!ensure (PossessedTank)) { return; }
+
+	PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+	auto PossessedTank = GetPawn();
+
+	if (!ensure(PossessedTank)) { return; }
+
+	UE_LOG(LogTemp, Warning, TEXT("Received OnDeath broadcast from %s!"), *(PossessedTank->GetName()));
+	StartSpectatingOnly();
+}
+
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraWorldLocation; // To be discarded
