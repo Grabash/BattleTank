@@ -74,7 +74,7 @@ protected:
 	EFiringState FiringState = EFiringState::Reloading;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 RoundsLeft = 3;
+	int32 RoundsLeft = 10;
 
 	double LastFireTime = 0;
 	FVector AimDirection;
