@@ -12,15 +12,20 @@ ASprungWheel::ASprungWheel()
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Mass Wheel Constraint"));
 	SetRootComponent(MassWheelConstraint);
 
+	Axle = CreateDefaultSubobject<USphereComponent>(FName("Axle"));
+	Axle->SetupAttachment(MassWheelConstraint);
 
 
-	/*Mass = CreateDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(MassWheelConstraint);
-*/
-	Wheel = CreateDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
+	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
 	// Wheel->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
 	// or, possible in the constructor only?
-	Wheel->SetupAttachment(MassWheelConstraint);
+	Wheel->SetupAttachment(Axle);
+
+	
+
+	AxleWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Axle Wheel Constraint"));
+	AxleWheelConstraint->SetupAttachment(Axle);
+
 
 
 
@@ -48,6 +53,7 @@ void ASprungWheel::SetupConstraint()
 	if (!GetAttachParentActor()) return;
 	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
 	if (!BodyRoot) return;
-	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Axle, NAME_None);
+	AxleWheelConstraint->SetConstrainedComponents(Axle, NAME_None, Wheel, NAME_None);
 }
 
