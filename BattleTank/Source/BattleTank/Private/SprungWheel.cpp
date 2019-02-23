@@ -22,8 +22,6 @@ ASprungWheel::ASprungWheel()
 	// or, possible in the constructor only?
 	Wheel->SetupAttachment(MassWheelConstraint);
 
-	
-
 
 
 }
@@ -33,11 +31,8 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetupConstraint();
 	
-	if (GetAttachParentActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Not Null: %s"), *GetAttachParentActor()->GetName());
-	}
 	
 }
 
@@ -46,5 +41,13 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ASprungWheel::SetupConstraint()
+{
+	if (!GetAttachParentActor()) return;
+	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) return;
+	MassWheelConstraint->SetConstrainedComponents(BodyRoot, NAME_None, Wheel, NAME_None);
 }
 

@@ -25,6 +25,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	void SetupConstraint();
+
 	/*UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* Mass = nullptr;*/
 	UPROPERTY(VisibleAnywhere, Category = "Components")
