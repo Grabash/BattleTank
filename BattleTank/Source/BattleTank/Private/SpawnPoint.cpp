@@ -29,15 +29,15 @@ void USpawnPoint::BeginPlay()
 
 	// Actually done but keeping bookmark
 
-	auto NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
+	SpawnedActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
 	
 
-	if (!NewActor) return;
+	if (!SpawnedActor) return;
 
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+	SpawnedActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
 
 	// finishing spawning and calling BeginPlay()
-	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
+	UGameplayStatics::FinishSpawningActor(SpawnedActor, GetComponentTransform());
 	
 }
 
@@ -48,5 +48,10 @@ void USpawnPoint::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+AActor * USpawnPoint::GetSpawnedActor() const
+{
+	return SpawnedActor;
 }
 

@@ -16,24 +16,25 @@ class BATTLETANK_API USpawnPoint : public USceneComponent
 public:	
 	// Sets default values for this component's properties
 	USpawnPoint();
+	// Called every frame
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	AActor* GetSpawnedActor() const;
+
+	// Config
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Setup")
+	TSubclassOf<AActor> SpawnClass;
+
+	// Cant really find the SprungWheel_BP class in C++?
+	//TSubclassOf<AActor> SpawnClass = ASprungWheel::StaticClass();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+		
+private:
+	UPROPERTY()
+		AActor* SpawnedActor = nullptr;
 
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-//private:
-public:
-	// Config
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Setup")
-		TSubclassOf<AActor> SpawnClass;
-
-	// Cant really find the SprungWheel_BP class in C++?
-	//TSubclassOf<AActor> SpawnClass = ASprungWheel::StaticClass();
-	
-	
 		
 };
