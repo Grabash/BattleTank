@@ -29,7 +29,7 @@ private:
 	bool GetSightRayHitLocation(FVector& OutHitLocation) const;
 	virtual void SetPawn(APawn* InPawn) override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 		void OnPossessedTankDeath();
 
 protected:
@@ -38,6 +38,9 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent* AimCompRef);
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void TankDeadBPEvent();
 
 
 public:

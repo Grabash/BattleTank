@@ -114,6 +114,9 @@ void ATankPlayerController::OnPossessedTankDeath()
 
 	UE_LOG(LogTemp, Warning, TEXT("Received OnDeath broadcast from %s!"), *(PossessedTank->GetName()));
 	StartSpectatingOnly();
+	TankDeadBPEvent();
+
+	
 }
 
 bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
