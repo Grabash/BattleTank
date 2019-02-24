@@ -11,6 +11,8 @@ void ATankPlayerController::BeginPlay()
 	Super::BeginPlay();
 	// UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin Play"));
 
+	if (!GetPawn()) return;
+
 	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
